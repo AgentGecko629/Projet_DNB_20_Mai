@@ -1,39 +1,35 @@
 function Chronometre () {
-    cp = 10
-    while (cp > 0) {
-        basic.showNumber(cp)
+    entree = ""
+    Temps = 10
+    while (StopChronometre == false && Temps > 0) {
+        basic.showNumber(Temps)
         basic.pause(1000)
-        cp += 0 - 1
+        Temps += 0 - 1
     }
 }
 input.onButtonPressed(Button.A, function () {
     entree = "" + entree + "A"
 })
 function Verifier () {
-    if (input.magneticForce(Dimension.Strength) < 200) {
-        OuverturePorte = true
+    if (StopChronometre == false && input.magneticForce(Dimension.Strength) < 200) {
         basic.showIcon(IconNames.No)
         Chronometre()
-    } else {
+    } else if (StopChronometre == false && input.magneticForce(Dimension.Strength) > 200) {
         basic.showIcon(IconNames.Yes)
-        OuverturePorte = false
     }
 }
-bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () {
-    control.reset()
-})
 input.onButtonPressed(Button.AB, function () {
-    if (entree == Mdp) {
+    if (entree == Motdepasse) {
+        StopChronometre = true
         entree = ""
-        basic.clearScreen()
         basic.showIcon(IconNames.Yes)
-        basic.pause(300000)
+        basic.pause(60000)
         Verifier()
     } else {
+        StopChronometre = true
         basic.showIcon(IconNames.Angry)
-        basic.pause(500)
         bluetooth.uartWriteLine("ALERTE !!")
-        basic.pause(5000)
+        control.reset()
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -190,16 +186,13 @@ function Demarrage () {
     basic.pause(500)
     basic.clearScreen()
 }
-let OuverturePorte = false
-let cp = 0
+let Temps = 0
 let entree = ""
-let Mdp = ""
-Mdp = "ABBAB"
+let Motdepasse = ""
+let StopChronometre = false
+StopChronometre = false
+Motdepasse = "ABBAB"
 entree = ""
 bluetooth.startUartService()
-basic.pause(200)
 Demarrage()
-basic.pause(2000)
-basic.forever(function () {
-    Verifier()
-})
+Verifier()
