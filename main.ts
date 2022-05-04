@@ -29,7 +29,6 @@ input.onButtonPressed(Button.AB, function () {
         StopChronometre = true
         basic.showIcon(IconNames.Angry)
         bluetooth.uartWriteLine("ALERTE !!")
-        control.reset()
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -195,4 +194,6 @@ Motdepasse = "ABBAB"
 entree = ""
 bluetooth.startUartService()
 Demarrage()
-Verifier()
+basic.forever(function () {
+    Verifier()
+})
