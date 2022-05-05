@@ -1,6 +1,6 @@
 function Chronometre () {
     entree = ""
-    Temps = 10
+    Temps = 15
     while (StopChronometre == false && Temps > 0) {
         basic.showNumber(Temps)
         basic.pause(1000)
@@ -23,12 +23,13 @@ input.onButtonPressed(Button.AB, function () {
         StopChronometre = true
         entree = ""
         basic.showIcon(IconNames.Yes)
-        basic.pause(60000)
         Verifier()
     } else {
         StopChronometre = true
         basic.showIcon(IconNames.Angry)
         bluetooth.uartWriteLine("ALERTE !!")
+        basic.pause(5000)
+        control.reset()
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -182,7 +183,7 @@ function Demarrage () {
         # . # . #
         # # # # #
         `)
-    basic.pause(500)
+    basic.pause(200)
     basic.clearScreen()
 }
 let Temps = 0
@@ -190,7 +191,7 @@ let entree = ""
 let Motdepasse = ""
 let StopChronometre = false
 StopChronometre = false
-Motdepasse = "ABBAB"
+Motdepasse = "ABBABAA"
 entree = ""
 bluetooth.startUartService()
 Demarrage()
