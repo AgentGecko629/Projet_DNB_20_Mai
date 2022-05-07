@@ -35,6 +35,11 @@ input.onButtonPressed(Button.AB, function () {
 input.onButtonPressed(Button.B, function () {
     entree = "" + entree + "B"
 })
+bluetooth.onUartDataReceived("ABBABAA", function () {
+    basic.showIcon(IconNames.Yes)
+    basic.pause(1000)
+    basic.clearScreen()
+})
 function Demarrage () {
     basic.showLeds(`
         # . . . .
